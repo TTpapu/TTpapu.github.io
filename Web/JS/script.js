@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const yearLinks = document.querySelectorAll("#year-menu a");
     const monthMenu = document.getElementById("month-menu");
+    const contentSection = document.getElementById("content");
 
     const months = [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -12,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             const year = e.target.dataset.year;
 
-            // Limpia el menú de meses
+            // Limpia el menú de meses y el contenido
             monthMenu.innerHTML = `<h2>${year}</h2>`;
+            contentSection.innerHTML = ''; // Limpiar contenido previo
             const ul = document.createElement("ul");
 
             months.forEach(month => {
@@ -32,10 +34,31 @@ document.addEventListener("DOMContentLoaded", function () {
                     const selectedYear = e.target.dataset.year;
                     const selectedMonth = e.target.dataset.month;
 
-                    // Aquí puedes mostrar los memes o videos para el mes seleccionado
-                    alert(`Seleccionaste ${selectedMonth} de ${selectedYear}`);
+                    // Cargar memes o videos para el mes seleccionado
+                    loadMemes(selectedYear, selectedMonth);
                 });
             });
+
+            // Cambiar el color del enlace activo
+            yearLinks.forEach(yl => yl.classList.remove("active"));
+            e.target.classList.add("active");
         });
     });
+
+    function loadMemes(year, month) {
+        contentSection.innerHTML = ''; // Limpiar contenido previo
+    
+        if (year === "2018" && month === "Enero") {
+            contentSection.innerHTML = `
+                <h3>Meme de ${month} ${year}</h3>
+                <video width="400" controls>
+                    <source src="memes/${year}/${month}/2018enero.mp4" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+                <p>¡Disfruta del meme!</p>
+            `;
+        } else {
+            contentSection.innerHTML = `<p>No hay memes disponibles para ${month} ${year}.</p>`;
+        }
+    }
 });

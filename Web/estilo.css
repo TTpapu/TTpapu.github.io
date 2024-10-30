@@ -1,0 +1,96 @@
+/* Estilos Generales */
+body {
+    background-color: #1e1e1e; /* Fondo oscuro */
+    color: #f5f5f5; /* Texto claro */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el Encabezado */
+header {
+    background-color: #333; /* Fondo del encabezado */
+    padding: 15px;
+    text-align: center;
+}
+
+/* Estilo del Título */
+h1 {
+    font-family: 'Montserrat', sans-serif; /* Cambiar a Montserrat */
+    font-weight: bold; /* Texto en negrita */
+    color: #ff69b4; /* Color rosa más intenso */
+    margin: 0;
+}
+
+/* Estilos para la Navegación */
+nav {
+    margin: 20px 0;
+}
+
+nav ul {
+    list-style-type: none; /* Sin viñetas */
+    padding: 0;
+}
+
+nav li {
+    display: inline; /* Elementos en línea */
+    margin: 0 10px;
+}
+
+nav a {
+    color: #9b59b6; /* Color morado cromático */
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+nav a:hover {
+    background-color: rgba(155, 89, 182, 0.5); /* Fondo morado semitransparente al pasar el mouse */
+}
+
+/* Cambiar color del enlace activo */
+nav a.active {
+    color: rgba(155, 89, 182, 0.7); /* Color más claro al seleccionar */
+    background-color: rgba(255, 105, 180, 0.5); /* Fondo rosa semitransparente */
+}
+
+/* Estilos para el Contenido Principal */
+main {
+    padding: 20px;
+    text-align: center; /* Centrar el texto */
+}
+
+/* Estilos para el Pie de Página */
+footer {
+    background-color: #333;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo del Cuadro de Búsqueda */
+#search {
+    padding: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #444; /* Fondo de la barra de búsqueda */
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilos Responsivos */
+@media (max-width: 600px) {
+    nav li {
+        display: block; /* Cambiar a bloque en pantallas pequeñas */
+        margin: 5px 0;
+    }
+
+    #search {
+        width: 100%; /* Ajustar el ancho de búsqueda */
+    }
+}
+
