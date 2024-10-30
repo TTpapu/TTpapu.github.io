@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Memes</title>
+    <title>Galería de Memes y Videos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
         h1 {
             text-align: center;
         }
-        .meme {
+        .media {
             margin: 10px;
             display: inline-block;
             border: 1px solid #ccc;
@@ -21,7 +21,7 @@
             overflow: hidden;
             background: white;
         }
-        img {
+        video, img {
             max-width: 100%;
             height: auto;
         }
@@ -33,41 +33,49 @@
     </style>
 </head>
 <body>
-    <h1>Galería de Memes</h1>
-    <div class="container" id="memeContainer"></div>
+    <h1>Galería de Memes y Videos</h1>
+    <div class="container" id="mediaContainer"></div>
 
     <script>
-        async function fetchMemes(year, month) {
+        async function fetchMedia(year, month) {
             try {
                 const response = await fetch(`/memes/${year}/${month}`);
-                if (!response.ok) throw new Error('No se encontraron memes');
-                const memes = await response.json();
-                displayMemes(year, month, memes);
+                if (!response.ok) throw new Error('No se encontraron memes o videos');
+                const media = await response.json();
+                displayMedia(year, month, media);
             } catch (error) {
                 console.error(error);
                 alert(error.message);
             }
         }
 
-        function displayMemes(year, month, memes) {
-            const container = document.getElementById('memeContainer');
+        function displayMedia(year, month, media) {
+            const container = document.getElementById('mediaContainer');
             container.innerHTML = ''; // Limpiar contenedor
 
-            memes.forEach(meme => {
-                const memeDiv = document.createElement('div');
-                memeDiv.className = 'meme';
-                
-                const img = document.createElement('img');
-                img.src = `/memes/${year}/${month}/${meme}`;
-                img.alt = meme;
+            media.forEach(item => {
+                const mediaDiv = document.createElement('div');
+                mediaDiv.className = 'media';
 
-                memeDiv.appendChild(img);
-                container.appendChild(memeDiv);
+                const ext = item.split('.').pop();
+                if (ext === 'mp4' || ext === 'mov') {
+                    const video = document.createElement('video');
+                    video.src = `/memes/${year}/${month}/${item}`;
+                    video.controls = true;
+                    mediaDiv.appendChild(video);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = `/memes/${year}/${month}/${item}`;
+                    img.alt = item;
+                    mediaDiv.appendChild(img);
+                }
+
+                container.appendChild(mediaDiv);
             });
         }
 
         // Llamar a la función con el año y mes que desees
-        fetchMemes(2023, 'octubre'); // Cambia año y mes según necesites
+        fetchMedia(2023, 'octubre'); // Cambia año y mes según necesites
     </script>
 </body>
 </html>
