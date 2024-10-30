@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
             contentSection.innerHTML = ''; // Limpiar contenido previo
             const ul = document.createElement("ul");
 
-            months.forEach(month => {
+            months.forEach((month, index) => {
                 const li = document.createElement("li");
-                li.innerHTML = `<a href="#" data-year="${year}" data-month="${month}">${month}</a>`;
+                li.innerHTML = `<a href="#" data-year="${year}" data-month="${index + 1}">${month}</a>`;
                 ul.appendChild(li);
             });
 
@@ -47,18 +47,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadMemes(year, month) {
         contentSection.innerHTML = ''; // Limpiar contenido previo
-    
-        if (year === "2018" && month === "Enero") {
+
+        // Verificar si hay contenido para octubre de 2017
+        if (year === "2017" && month === "10") {
             contentSection.innerHTML = `
-                <h3>Meme de ${month} ${year}</h3>
-                <video width="400" controls>
-                    <source src="memes/${year}/${month}/2018enero.mp4" type="video/mp4">
+                <h3>Meme de ${months[month - 1]} ${year}</h3>
+                <video width="400" controls autoplay>
+                    <source src="memes/${year}/octubre/2017_octubre.mp4" type="video/mp4">
                     Tu navegador no soporta la etiqueta de video.
                 </video>
                 <p>¡Disfruta del meme!</p>
+                <img src="memes/${year}/octubre/Multimedia.png" alt="Multimedia" width="400">
             `;
         } else {
-            contentSection.innerHTML = `<p>No hay memes disponibles para ${month} ${year}.</p>`;
+            contentSection.innerHTML = `<p>No hay memes disponibles para ${months[month - 1]} ${year}.</p>`;
         }
     }
 });

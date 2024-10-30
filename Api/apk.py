@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 def create_memes_folders():
     try:
-        os.makedirs('memes', exist_ok=True)
+        # Cambiar la ruta para crear 'memes' dentro de 'Web'
+        os.makedirs('Web/memes', exist_ok=True)
 
         start_year = 2016
         end_year = 2024
@@ -13,8 +14,8 @@ def create_memes_folders():
                   "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
         for year in range(start_year, end_year + 1):
-            for month in months:  # Usar nombres de meses
-                path = os.path.join('memes', str(year), month)
+            for month in months:
+                path = os.path.join('Web/memes', str(year), month)
                 os.makedirs(path, exist_ok=True)
         print("Carpetas creadas con éxito.")
         
@@ -29,8 +30,8 @@ def get_memes(year, month):
     if month < 1 or month > 12:
         return jsonify({"error": "Mes no válido"}), 400
 
-    month_name = months[month - 1]  # Obtener el nombre del mes
-    memes_path = f'memes/{year}/{month_name}'
+    month_name = months[month - 1]
+    memes_path = f'Web/memes/{year}/{month_name}'
     
     if not os.path.exists(memes_path):
         return jsonify({"error": "No memes found for this date"}), 404
@@ -47,8 +48,8 @@ def get_meme(year, month, filename):
     if month < 1 or month > 12:
         return jsonify({"error": "Mes no válido"}), 400
 
-    month_name = months[month - 1]  # Obtener el nombre del mes
-    return send_from_directory(f'memes/{year}/{month_name}', filename)
+    month_name = months[month - 1]
+    return send_from_directory(f'Web/memes/{year}/{month_name}', filename)
 
 if __name__ == '__main__':
     create_memes_folders()  # Crear las carpetas al inicio
