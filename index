@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Memes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+        }
+        .meme {
+            margin: 10px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Galería de Memes</h1>
+    <div class="container" id="memeContainer"></div>
+
+    <script>
+        async function fetchMemes(year, month) {
+            try {
+                const response = await fetch(`/memes/${year}/${month}`);
+                if (!response.ok) throw new Error('No se encontraron memes');
+                const memes = await response.json();
+                displayMemes(year, month, memes);
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
+            }
+        }
+
+        function displayMemes(year, month, memes) {
+            const container = document.getElementById('memeContainer');
+            container.innerHTML = ''; // Limpiar contenedor
+
+            memes.forEach(meme => {
+                const memeDiv = document.createElement('div');
+                memeDiv.className = 'meme';
+                
+                const img = document.createElement('img');
+                img.src = `/memes/${year}/${month}/${meme}`;
+                img.alt = meme;
+
+                memeDiv.appendChild(img);
+                container.appendChild(memeDiv);
+            });
+        }
+
+        // Llamar a la función con el año y mes que desees
+        fetchMemes(2023, 'octubre'); // Cambia año y mes según necesites
+    </script>
+</body>
+</html>
