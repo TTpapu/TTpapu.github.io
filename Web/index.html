@@ -3,79 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Memes y Videos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            text-align: center;
-        }
-        .media {
-            margin: 10px;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            background: white;
-        }
-        video, img {
-            max-width: 100%;
-            height: auto;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    </style>
+    <title>Momopedia</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Galería de Memes y Videos</h1>
-    <div class="container" id="mediaContainer"></div>
+    <header>
+        <h1>Momopedia</h1>
+        <nav>
+            <ul>
+                <li><a href="#2016">2016</a></li>
+                <li><a href="#2017">2017</a></li>
+                <li><a href="#2018">2018</a></li>
+                <li><a href="#2019">2019</a></li>
+                <li><a href="#2020">2020</a></li>
+                <li><a href="#2021">2021</a></li>
+                <li><a href="#2022">2022</a></li>
+                <li><a href="#2023">2023</a></li>
+                <li><a href="#2024">2024</a></li>
+            </ul>
+        </nav>
+        <input type="text" id="search" placeholder="Buscar...">
+    </header>
 
-    <script>
-        async function fetchMedia(year, month) {
-            try {
-                const response = await fetch(`/memes/${year}/${month}`);
-                if (!response.ok) throw new Error('No se encontraron memes o videos');
-                const media = await response.json();
-                displayMedia(year, month, media);
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-            }
-        }
+    <main>
+        <section id="content">
+            <!-- Aquí se mostrarán los memes y videos -->
+        </section>
+    </main>
 
-        function displayMedia(year, month, media) {
-            const container = document.getElementById('mediaContainer');
-            container.innerHTML = ''; // Limpiar contenedor
+    <footer>
+        <p>© 2024 Momopedia. Todos los derechos reservados.</p>
+    </footer>
 
-            media.forEach(item => {
-                const mediaDiv = document.createElement('div');
-                mediaDiv.className = 'media';
-
-                const ext = item.split('.').pop();
-                if (ext === 'mp4' || ext === 'mov') {
-                    const video = document.createElement('video');
-                    video.src = `/memes/${year}/${month}/${item}`;
-                    video.controls = true;
-                    mediaDiv.appendChild(video);
-                } else {
-                    const img = document.createElement('img');
-                    img.src = `/memes/${year}/${month}/${item}`;
-                    img.alt = item;
-                    mediaDiv.appendChild(img);
-                }
-
-                container.appendChild(mediaDiv);
-            });
-        }
-
-        // Llamar a la función con el año y mes que desees
-        fetchMedia(2023, 'octubre'); // Cambia año y mes según necesites
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
