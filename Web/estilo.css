@@ -81,16 +81,3 @@ footer {
     background-color: #444; /* Fondo de la barra de búsqueda */
     color: #fff; /* Texto blanco */
 }
-
-/* Estilos Responsivos */
-@media (max-width: 600px) {
-    nav li {
-        display: block; /* Cambiar a bloque en pantallas pequeñas */
-        margin: 5px 0;
-    }
-
-    #search {
-        width: 100%; /* Ajustar el ancho de búsqueda */
-    }
-}
-

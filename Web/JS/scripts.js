@@ -12,9 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function (e) {
             e.preventDefault();
             const year = e.target.dataset.year;
-            console.log(`Año seleccionado: ${year}`);
 
-            // Limpia el menú de meses y el contenido
             monthMenu.innerHTML = `<h2>${year}</h2>`;
             contentSection.innerHTML = ''; // Limpiar contenido previo
             const ul = document.createElement("ul");
@@ -27,29 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             monthMenu.appendChild(ul);
 
-            // Agregar evento para cada mes
             const monthLinks = ul.querySelectorAll("a");
             monthLinks.forEach(monthLink => {
                 monthLink.addEventListener("click", function (e) {
                     e.preventDefault();
                     const selectedYear = e.target.dataset.year;
                     const selectedMonth = e.target.dataset.month;
-                    console.log(`Mes seleccionado: ${selectedMonth} del año ${selectedYear}`);
-
-                    // Cargar memes o videos para el mes seleccionado
                     loadMemes(selectedYear, selectedMonth);
                 });
             });
-
-            // Cambiar el color del enlace activo
-            yearLinks.forEach(yl => yl.classList.remove("active"));
-            e.target.classList.add("active");
         });
     });
 
     function loadMemes(year, month) {
         contentSection.innerHTML = ''; // Limpiar contenido previo
-        console.log(`Cargando memes para ${year} ${months[month - 1]}`);
 
         const monthNames = [
             "", "enero", "febrero", "marzo", "abril", "mayo", "junio",
@@ -61,21 +50,36 @@ document.addEventListener("DOMContentLoaded", function () {
         const imagePath = `memes/${year}/${monthFolder}/Multimedia.png`;
 
         // Verificar si hay contenido para el mes seleccionado
-        console.log(`Rutas de video: ${videoPath}`);
-        console.log(`Rutas de imagen: ${imagePath}`);
+        checkFile(videoPath).then(videoExists => {
+            checkFile(imagePath).then(imageExists => {
+                if (videoExists && imageExists) {
+                    contentSection.innerHTML = `
+                        <h3>Meme de ${months[month - 1]} ${year}</h3>
+                        <video width="400" controls autoplay>
+                            <source src="${videoPath}" type="video/mp4">
+                            Tu navegador no soporta la etiqueta de video.
+                        </video>
+                        <p>¡Disfruta del meme!</p>
+                        <img src="${imagePath}" alt="Multimedia" width="400">
+                    `;
+                } else {
+                    contentSection.innerHTML = `<p>No hay memes disponibles para ${months[month - 1]} ${year}.</p>`;
+                }
+            });
+        });
+    }
 
-        if (year === "2017" && month >= 1 && month <= 12) {
-            contentSection.innerHTML = `
-                <h3>Meme de ${months[month - 1]} ${year}</h3>
-                <video width="400" controls autoplay>
-                    <source src="${videoPath}" type="video/mp4">
-                    Tu navegador no soporta la etiqueta de video.
-                </video>
-                <p>¡Disfruta del meme!</p>
-                <img src="${imagePath}" alt="Multimedia" width="400">
-            `;
-        } else {
-            contentSection.innerHTML = `<p>No hay memes disponibles para ${months[month - 1]} ${year}.</p>`;
-        }
+    function checkFile(path) {
+        return new Promise(resolve => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('HEAD', path, true);
+            xhr.onload = function () {
+                resolve(xhr.status === 200); // Resuelve true si el archivo existe
+            };
+            xhr.onerror = function () {
+                resolve(false); // Resuelve false si hay un error
+            };
+            xhr.send();
+        });
     }
 });
