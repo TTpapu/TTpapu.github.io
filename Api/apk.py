@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 def create_memes_folders():
     try:
-        # Cambiar la ruta para crear 'memes' dentro de 'Web'
         os.makedirs('Web/memes', exist_ok=True)
 
         start_year = 2016
